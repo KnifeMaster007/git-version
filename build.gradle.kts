@@ -12,7 +12,7 @@ repositories {
 val jgitVersion by extra { "5.7.0.202003110725-r" }
 val junitVersion by extra { "5.6.2" }
 
-version = "0.1.3"
+version = "0.1.4"
 
 dependencies {
     implementation(kotlin("stdlib"))
