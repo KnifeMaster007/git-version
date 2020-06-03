@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskAction
 open class PrintDetailsTask: DefaultTask() {
     @TaskAction
     fun printDetails() {
-        extensions.getByType(GitversionExtension::class.java).let { details ->
+        project.extensions.getByType(GitversionExtension::class.java).let { details ->
             println("""
             Commit Time: ${details.commitTime}
             Author email: ${details.authorEmail}
