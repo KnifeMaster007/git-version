@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.3.61"
     id("com.gradle.plugin-publish") version "0.12.0"
+    id("com.github.knifemaster007.git-version") version "0.1.4"
     `java-gradle-plugin`
 }
 
@@ -12,7 +13,7 @@ repositories {
 val jgitVersion by extra { "5.7.0.202003110725-r" }
 val junitVersion by extra { "5.6.2" }
 
-version = "0.1.4"
+version = gitVersionDetails.tags?.joinToString("-") ?: gitVersionDetails.shortHash ?: "dev"
 
 dependencies {
     implementation(kotlin("stdlib"))
