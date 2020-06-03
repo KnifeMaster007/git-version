@@ -34,24 +34,26 @@ open class GitversionExtension(private val repo: Repository?) {
 
     private val treeMeta: TreeMetaInfo? by lazy {
         walker?.let { wk ->
-            val meta = TreeMetaInfo()
-            wk.reset()
-            wk.sort(RevSort.COMMIT_TIME_DESC)
-            wk.markStart(headCommit)
-            wk.mapIndexed { index, revCommit ->
-                repoTags?.let { tags ->
-                    if (meta.distanceFromTagged == null) {
-                        val commitTags = tags.filter { it.objectId == revCommit.toObjectId() }
-                        if (commitTags.isNotEmpty()) {
-                            meta.distanceFromTagged = index
-                            meta.nearestTags = commitTags
+            headCommit?.let { head ->
+                val meta = TreeMetaInfo()
+                wk.reset()
+                wk.sort(RevSort.COMMIT_TIME_DESC)
+                wk.markStart(head)
+                wk.mapIndexed { index, revCommit ->
+                    repoTags?.let { tags ->
+                        if (meta.distanceFromTagged == null) {
+                            val commitTags = tags.filter { it.objectId == revCommit.toObjectId() }
+                            if (commitTags.isNotEmpty()) {
+                                meta.distanceFromTagged = index
+                                meta.nearestTags = commitTags
+                            }
                         }
-                    }
 
+                    }
+                    meta.totalCommits += 1
                 }
-                meta.totalCommits += 1
+                meta
             }
-            meta
         }
     }
 
