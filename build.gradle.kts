@@ -10,13 +10,21 @@ repositories {
 
 
 val jgitVersion by extra { "5.6.0.201912101111-r" }
+val junitVersion by extra { "5.6.2" }
 
-version = "0.1.1"
+version = "0.1.2"
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
     implementation("org.eclipse.jgit:org.eclipse.jgit:$jgitVersion")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 gradlePlugin {
